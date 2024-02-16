@@ -21,18 +21,19 @@ if CLIENT then
         RealmDropdown:AddChoice("Server")
         RealmDropdown:AddChoice("Client")
         RealmDropdown:AddChoice("Shared")
-        RealmDropdown:ChooseOption("Client")
+        RealmDropdown:ChooseOption("Shared")
 
         local codeInput = vgui.Create("DTextEntry", notepadFrame)
         codeInput:Dock(FILL)
         codeInput:SetMultiline(true)
         codeInput:SetFont("TargetID")
-        codeInput:SetTextColor(Color(255, 255, 255))
+        codeInput:SetTextColor(Color(180, 180, 160))
         codeInput:SetText(text)
 
         local executeButton = vgui.Create("DButton", notepadFrame)
         executeButton:Dock(BOTTOM)
         executeButton:SetText("Execute Code")
+
 
         function executeButton:DoClick()
             local msg = RunString( codeInput:GetText(), "InGameScript", false )
@@ -46,18 +47,33 @@ if CLIENT then
             end
 
             if endfunc then
-                endfunc()
+                endfunc( codeInput:GetText() )
             end
         end
 
     end
 
+    local function GetINSCAutorun()
+        
+    end
+
+
+    local function SaveINSCAutoRun( text )
+        
+    end
+
 
     hook.Add("OnPlayerChat", "OpenNotepadCommand", function(ply, text)
 
-        if ply==LocalPlayer() && string.lower(text) == "!insc" then
-            INSC()
-            return true
+        if ply==LocalPlayer() then
+
+            if string.lower(text) == "!insc" then
+                INSC( _, true )
+                return true
+            elseif string.lower(text) == "!ainsc" then
+                INSC( GetINSCAutorun(), true, SaveINSCAutoRun )
+                return true
+            end
         end
 
     end)
