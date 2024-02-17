@@ -36,7 +36,7 @@ if CLIENT then
         local notepadFrame = vgui.Create("DFrame")
         local executeButton = vgui.Create("DButton", notepadFrame)
         local codeInput = vgui.Create("DTextEntry", notepadFrame)
-        local RealmDropdown = vgui.Create("DComboBox", notepadFrame)
+        local RealmDropdown = !forcerealm && vgui.Create("DComboBox", notepadFrame)
 
         notepadFrame:SetSize(ScrW()*0.85, ScrH()*0.85)
         notepadFrame:SetTitle(title)
