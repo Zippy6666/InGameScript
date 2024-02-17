@@ -25,7 +25,7 @@ end
 
 if CLIENT then
 
-    local function INSC( title, text, close, endfunc, forcerealm )
+    local function INSC( title, text, close, forcerealm, filename )
         
         if !LocalPlayer():IsSuperAdmin() then return end
 
@@ -92,8 +92,8 @@ if CLIENT then
                 notepadFrame:Close()
             end
 
-            if endfunc then
-                endfunc( codeInput:GetText() )
+            if filename then
+                file.Write(filename, text)
             end
         end
 
@@ -102,20 +102,16 @@ if CLIENT then
 
 
 
-    local function GetINSCAutorun()
+    local function GetINSCAutorun( name )
 
-        if !file.Exists("inscautorun.txt", "DATA") then
-            file.Write("inscautorun.txt", 'print("sup")')
+        if !file.Exists(name, "DATA") then
+            file.Write(name, 'print("sup")')
         end
 
-        return file.Read("inscautorun.txt")
+        return file.Read(name)
 
     end
 
-
-    local function SaveINSCAutoRun( text )
-        file.Write("inscautorun.txt", text)
-    end
 
 
     hook.Add("OnPlayerChat", "OpenNotepadCommand", function(ply, text)
@@ -126,7 +122,7 @@ if CLIENT then
                 INSC( "In-game Script", _, true )
                 return true
             elseif string.lower(text) == "!ainsc" then
-                INSC( "In-game Autorun", GetINSCAutorun(), true, SaveINSCAutoRun, "Shared" )
+                INSC( "In-game Autorun", GetINSCAutorun("inscautorun.txt"), true, "Shared",  )
                 return true
             end
         end
