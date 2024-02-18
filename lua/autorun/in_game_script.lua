@@ -69,9 +69,9 @@ if CLIENT then
             end
 
         end
-        function notepad:GetAutoComplete( inptext )
-            return {inptext, "ass"}
-        end
+        -- function notepad:GetAutoComplete( inptext )
+        --     return {inptext, "ass"}
+        -- end
 
 
         executeButton:Dock(BOTTOM)
@@ -104,7 +104,7 @@ if CLIENT then
 
             -- File save
             if filename then
-                file.Write(filename, text)
+                file.Write(filename, notepad:GetText())
             end
         end
 
